@@ -1,0 +1,11 @@
+{
+  "$schema": "https://www.chromatic.com/config-file-schema.json",
+  "projectId": "Project:Sprint-12-Visual-Regression-Pipeline",
+  "buildScriptName": "build-storybook",
+  "autoAcceptChanges": "main",
+  "exitZeroOnChanges": false,
+  "onlyChanged": true,
+  "zip": true,
+  "externals": ["public/**"],
+  "visualRegressionThreshold": 0.02
+}

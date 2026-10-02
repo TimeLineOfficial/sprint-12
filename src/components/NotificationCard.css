@@ -1,0 +1,85 @@
+.notif-card {
+  background-color: #111827;
+  border: 1px solid #374151;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 400px;
+  width: 100%;
+  color: #f9fafb;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.notif-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.notif-badge {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  color: #10b981;
+  text-transform: uppercase;
+}
+
+.notif-time {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.notif-title {
+  font-size: 1.125rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.notif-customer,
+.notif-amount {
+  font-size: 0.85rem;
+  color: #d1d5db;
+  margin: 2px 0;
+}
+
+.notif-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.notif-item-pill {
+  background: #1f2937;
+  border: 1px solid #374151;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.notif-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #374151;
+  padding-top: 8px;
+}
+
+.notif-node-tag {
+  font-size: 0.7rem;
+  color: #a78bfa;
+}
+
+.notif-ack-btn {
+  background: #10b981;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}

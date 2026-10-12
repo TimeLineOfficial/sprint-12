@@ -1,78 +1,86 @@
-# Sprint 12: Real-Time Pipelines & UI Component Isolation
-
-This repository contains the complete implementation for **Sprint 12**, fulfilling all technical requirements for both **Track A (Frontend Specialists)** and **Track B (Fullstack Developers)**.
-
----
-
-## 🎯 Architecture Overview
-
-```
-Sprint 12 System Architecture
-├── Track A: Component-Driven Isolation (Storybook + Chromatic Visual Regression)
-│   ├── src/components/
-│   │   ├── Button.jsx (Primary, Secondary, Disabled, Loading states)
-│   │   ├── Badge.jsx (Status & Room badges)
-│   │   └── NotificationCard.jsx (Real-time order notification alert)
-│   └── src/stories/
-│       ├── Button.stories.jsx (Prop matrix variations in isolated canvas)
-│       ├── Badge.stories.jsx
-│       └── NotificationCard.stories.jsx
-│
-└── Track B: WebSockets & Event-Driven Architecture (Socket.io + Redis Pub/Sub)
-    ├── server.js (Express HTTP + Socket.io Server + Multi-Node Redis Adapter Bus)
-    └── public/
-        ├── index.html (Interactive WebSockets Inspector & Room Control Dashboard)
-        └── app.js (Live Socket Client & Inter-Node Broadcast Simulator)
-```
+# ENG-149204: Real-Time Communication Portal
+**Epic**: Core Infrastructure Overhaul & Real-Time Sync  
+**Priority**: P0 (Critical - Blocking Revenue)  
+**Story Points**: 8  
+**Reporter**: Amit Sharma (Senior Staff Engineer)  
+**Assignee**: Floor Dispatch Infrastructure Team  
 
 ---
 
-## 🚀 Track A Compliance: Component-Driven Architecture (Storybook)
+## 🎯 Executive Summary & Mission Context
 
-1. **Phase 1 (Storybook Initialization - P0 Mandatory)**:
-   - UI elements are built in total isolation outside the app matrix using Storybook 8.
-2. **Phase 2 (Prop Matrix Variations - P1 Expected)**:
-   - `Button.jsx` defines strict prop args supporting `primary`, `secondary`, `disabled`, and `loading` states in the isolated canvas.
-3. **Phase 3 (Visual Regression Testing - P2 Enterprise Scalability)**:
-   - Configured `chromatic.config.json` with a visual regression pixel threshold of `0.02` to block PRs if visual rendering changes.
+Floor staff and dispatchers were previously struggling with a fragmented mixture of email threads, SMS, and legacy systems, causing severe handoff delays and a 15% loss in daily operational efficiency. 
+
+This repository delivers the **P0 Production Solution**: a resilient, stateful, persistent Real-Time Communication Portal built on **React 18** and **WebSockets**, engineered to withstand Wi-Fi dropouts, slow 3G connectivity, and sudden disconnections without ever requiring a manual browser refresh.
 
 ---
 
-## ⚡ Track B Compliance: WebSockets & Event-Driven Architecture
+## 🏗️ Architecture & Acceptance Criteria Compliance
 
-1. **Phase 1 (Socket.io Infrastructure - P0 Mandatory)**:
-   - Express server integrated with `Socket.io` establishing a bidirectional persistent connection.
-2. **Phase 2 (Event Broadcasting - P1 Expected)**:
-   - Target room subscriptions (`admin-room`, `orders-room`, `telemetry-room`) with instant event broadcasting (`new-order`, `user-joined-room`).
-3. **Phase 3 (Horizontal WebSocket Scaling with Redis Pub/Sub - P2 Enterprise Scalability)**:
-   - Integrated `@socket.io/redis-adapter` with `ioredis` pub/sub backplane to enable inter-server node communication across cluster instances (`Server-Node-A` ↔ `Server-Node-B`).
+### 1. Architectural Overview & The "Happy Path"
+- **AC1 (Instant Persistent Connection)**: On mounting, `LiveFeedEngine.jsx` instantly establishes a persistent bidirectional connection to the target stream (`wss://echo.websocket.events`).
+- **AC2 (Real-Time State Ingestion)**: Incoming JSON payloads are parsed and appended to React state via defensive functional state updates (`setMessageLog(prev => [...prev, newMsg])`) preventing stale closures.
+- **AC3 (DOM Update Speed & Auto-Scroll)**: The feed updates within **50ms** of packet arrival. When a dispatcher is near the bottom of the feed, the view automatically and smoothly scrolls down to display incoming events.
+- **AC4 (Controlled Payload Dispatch)**: Staff can compose messages in a controlled input, hit "Enter" or click "Send", and emit sanitized payloads over the WebSocket tunnel.
 
 ---
 
-## 🛠️ How to Run & Test Locally
+## 🔬 Granular Implementation Phases
 
-### 1. Install Dependencies
-```bash
-npm install
-```
+### Phase 1: State Management & Socket Initialization
+- **Dedicated Component**: `src/components/LiveFeedEngine.jsx`
+- **State Enums**:
+  - `connectionStatus`: `'CONNECTING'` | `'CONNECTED'` | `'DISCONNECTED'`
+  - `messageLog`: Array of ingested and dispatched messages
+- **Memory Leak Prevention**: The `useEffect` hook cleans up on unmount by invoking `ws.close()`, guaranteeing zero zombie connections or memory leaks.
 
-### 2. Start Socket.io Real-Time Pipeline Server
-```bash
-npm start
-```
-- **WebSockets Dashboard**: Visit `http://localhost:4000`
+### Phase 2: Event Listeners & Defensive State Updates
+- **`ws.onopen`**: Transitions `connectionStatus` to `'CONNECTED'` and resets exponential backoff attempt counters.
+- **`ws.onmessage`**: Safely parses `event.data` and invokes functional state update (`prev => [...prev, newMsg]`).
+- **`ws.onerror`**: Gracefully degrades the interface rather than crashing or throwing unhandled runtime exceptions.
 
-### 3. Launch Isolated Storybook Component Canvas
-```bash
-npm run storybook
-```
-- **Storybook Canvas**: Visit `http://localhost:6006`
+### Phase 3: The Unhappy Path (Edge Cases & Resilience)
+- **Connection Dropped Banner**: If `ws.onclose` fires, a prominent, non-blocking alert banner immediately notifies staff: *"Connection Lost. Attempting to reconnect..."*.
+- **Exponential Backoff Reconnection**: Helper function schedules automated reconnection attempts with progressive delay:
+  $$\text{Delay} = \min(1000 \times 2^{\text{attempt}}, 10000)\text{ ms}$$
+  *(1s $\rightarrow$ 2s $\rightarrow$ 4s $\rightarrow$ 8s $\rightarrow$ capped at 10s)*.
+- **Empty State Illustration**: If `messageLog` is empty, displays a clean SVG illustration and helpful onboarding instructions rather than a blank screen.
+- **Bad Connectivity (3G Simulation)**: Displays an active visual spinner during the `'CONNECTING'` state.
+- **Input Validation**: Disables submission and grey-outs the send button if input consists entirely of whitespace or is empty.
+
+---
+
+## 🛡️ Non-Functional Requirements (NFRs)
+
+- **Accessibility (a11y - 100% Target)**:
+  - Feed container implements `role="log"` and `aria-live="polite"` so screen readers proactively announce new dispatch notices.
+  - Full keyboard navigation with skip-link, visible emerald focus rings (`outline: 2px solid #10b981`), and strict ARIA labels.
+- **Telemetry Simulation (`useAnalytics`)**:
+  - Custom hook `src/hooks/useAnalytics.js` logs structured telemetry to the console (`[Analytics] User Emitted WebSocket Payload`, `[Analytics] WebSocket Connection Established`).
+- **Security & XSS Prevention**:
+  - All inputs are strictly sanitized via `src/utils/sanitize.js` prior to rendering.
+  - Zero usage of `dangerouslySetInnerHTML`.
+- **Monochromatic Corporate Design System**:
+  - Dark charcoal and slate palette (`#090d16`, `#111827`, `#1f2937`, `#374151`) with emerald accent (`#10b981`).
+  - Strict 8px / 16px / 32px grid spacing steps.
+  - Flexbox viewport layout ensuring the dispatch input remains permanently anchored to the bottom while the feed scrolls.
 
 ---
 
 ## 📋 Definition of Done (DoD) Checklist
-- [x] Code compiles cleanly with zero syntax or build errors.
-- [x] Storybook canvas renders all component prop variations in complete isolation.
-- [x] Socket.io bidirectional connection connects and streams events in real time.
-- [x] Targeted room joining/leaving and event broadcasting tested and verified.
-- [x] Redis Pub/Sub adapter configured for horizontal scaling backplane.
+
+- [x] **Compiles cleanly**: Production Vite bundle builds with zero warnings or errors.
+- [x] **Persistent WebSocket connection**: Successfully establishes `wss://` handshake.
+- [x] **No Memory Leaks**: Clean `useEffect` cleanup invoking `ws.close()` on unmount.
+- [x] **Exponential Backoff**: Automatic retry logic with progressive backoff (1s $\rightarrow$ 2s $\rightarrow$ 4s $\rightarrow$ 10s max).
+- [x] **Functional State Updates**: `setMessageLog(prev => [...prev, newMsg])` eliminates stale closure bugs.
+- [x] **All Happy & Unhappy Acceptance Criteria Met**: Empty state, offline toast, whitespace validation, Wi-Fi dropout simulation.
+- [x] **Zero Hardcoded Secrets**: No API keys or sensitive PII committed to source.
+- [x] **Production Deployed**: Ready for live evaluation on GitHub Pages.
+
+---
+
+## 🌐 Live Deployment & Repository Links
+
+- **GitHub Repository**: [TimeLineOfficial/Sprint-12](https://github.com/TimeLineOfficial/Sprint-12.git)
+- **Live Deployment URL**: [https://timelineofficial.github.io/Sprint-12/](https://timelineofficial.github.io/Sprint-12/)

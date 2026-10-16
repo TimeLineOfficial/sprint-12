@@ -12,6 +12,5 @@ https://sprint-12-mu.vercel.app/
 https://timelineofficial.github.io/sprint-12/
 
 4. Video Walkthrough URL:
-[Insert Loom / YouTube / Google Drive Walkthrough Video Link Here]
-(e.g., https://www.loom.com/share/your-walkthrough-id)
+https://youtu.be/vdJoz7cA2Sg
 ================================================================================

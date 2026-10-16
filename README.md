@@ -128,3 +128,4 @@ Runs the Express + Socket.io server with Redis Pub/Sub cluster simulation on **`
 - **Vercel Live URL**: [https://sprint-12-mu.vercel.app/](https://sprint-12-mu.vercel.app/)
 - **GitHub Repository**: [https://github.com/TimeLineOfficial/sprint-12](https://github.com/TimeLineOfficial/sprint-12)
 - **GitHub Pages (Alternative Mirror)**: [https://timelineofficial.github.io/sprint-12/](https://timelineofficial.github.io/sprint-12/)
+- **Video Walkthrough Tutorial**: [https://youtu.be/vdJoz7cA2Sg](https://youtu.be/vdJoz7cA2Sg)

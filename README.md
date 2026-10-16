@@ -1,9 +1,12 @@
-# ENG-149204: Real-Time Communication Portal
+# FTEWSVE | [PDIT-FTE-11462] | [Client 12 Project] Submission
+## ENG-149204: Real-Time Communication Portal & Pipelines
 **Epic**: Core Infrastructure Overhaul & Real-Time Sync  
 **Priority**: P0 (Critical - Blocking Revenue)  
 **Story Points**: 8  
 **Reporter**: Amit Sharma (Senior Staff Engineer)  
 **Assignee**: Floor Dispatch Infrastructure Team  
+**Live Vercel URL**: [https://sprint-12-mu.vercel.app/](https://sprint-12-mu.vercel.app/)  
+**GitHub Repository**: [https://github.com/TimeLineOfficial/sprint-12](https://github.com/TimeLineOfficial/sprint-12)  
 
 ---
 
@@ -12,6 +15,46 @@
 Floor staff and dispatchers were previously struggling with a fragmented mixture of email threads, SMS, and legacy systems, causing severe handoff delays and a 15% loss in daily operational efficiency. 
 
 This repository delivers the **P0 Production Solution**: a resilient, stateful, persistent Real-Time Communication Portal built on **React 18** and **WebSockets**, engineered to withstand Wi-Fi dropouts, slow 3G connectivity, and sudden disconnections without ever requiring a manual browser refresh.
+
+---
+
+## 💻 Local Setup & Installation Instructions
+
+### Prerequisites
+- Node.js >= 18.0.0
+- npm >= 9.0.0
+
+### 1. Clone & Install Dependencies
+```bash
+git clone https://github.com/TimeLineOfficial/sprint-12.git
+cd sprint-12
+npm install
+```
+*(Note: `.npmrc` is included with `legacy-peer-deps=true` to guarantee seamless dependency installation across all environments).*
+
+### 2. Start React Development Server
+```bash
+npm run dev
+```
+Open **`http://localhost:3000`** in your browser to interact with the live WebSocket communication portal.
+
+### 3. Production Build
+```bash
+npm run build
+```
+Creates an optimized production bundle in the `dist/` directory.
+
+### 4. Run Storybook Isolated Component Canvas (Track A)
+```bash
+npm run storybook
+```
+Open **`http://localhost:6006`** to view isolated component state matrices (`primary`, `secondary`, `disabled`, `loading`, and `size`).
+
+### 5. Run Socket.io Real-Time Pipeline Server (Track B)
+```bash
+npm start
+```
+Runs the Express + Socket.io server with Redis Pub/Sub cluster simulation on **`http://localhost:4000`**.
 
 ---
 
@@ -76,11 +119,12 @@ This repository delivers the **P0 Production Solution**: a resilient, stateful, 
 - [x] **Functional State Updates**: `setMessageLog(prev => [...prev, newMsg])` eliminates stale closure bugs.
 - [x] **All Happy & Unhappy Acceptance Criteria Met**: Empty state, offline toast, whitespace validation, Wi-Fi dropout simulation.
 - [x] **Zero Hardcoded Secrets**: No API keys or sensitive PII committed to source.
-- [x] **Production Deployed**: Ready for live evaluation on GitHub Pages.
+- [x] **Production Deployed**: Live and verified on Vercel at [https://sprint-12-mu.vercel.app/](https://sprint-12-mu.vercel.app/).
 
 ---
 
-## 🌐 Live Deployment & Repository Links
+## 🌐 Submission Links Summary
 
-- **GitHub Repository**: [TimeLineOfficial/Sprint-12](https://github.com/TimeLineOfficial/Sprint-12.git)
-- **Live Deployment URL**: [https://timelineofficial.github.io/Sprint-12/](https://timelineofficial.github.io/Sprint-12/)
+- **Vercel Live URL**: [https://sprint-12-mu.vercel.app/](https://sprint-12-mu.vercel.app/)
+- **GitHub Repository**: [https://github.com/TimeLineOfficial/sprint-12](https://github.com/TimeLineOfficial/sprint-12)
+- **GitHub Pages (Alternative Mirror)**: [https://timelineofficial.github.io/sprint-12/](https://timelineofficial.github.io/sprint-12/)

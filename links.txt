@@ -1,0 +1,17 @@
+================================================================================
+FTEWSVE | [PDIT-FTE-11462] | [Client 12 Project] Submission Links
+================================================================================
+
+1. GitHub Repository URL:
+https://github.com/TimeLineOfficial/sprint-12
+
+2. Live Deployment URL (Vercel):
+https://sprint-12-mu.vercel.app/
+
+3. Alternative Live Deployment URL (GitHub Pages):
+https://timelineofficial.github.io/sprint-12/
+
+4. Video Walkthrough URL:
+[Insert Loom / YouTube / Google Drive Walkthrough Video Link Here]
+(e.g., https://www.loom.com/share/your-walkthrough-id)
+================================================================================

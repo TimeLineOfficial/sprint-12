@@ -1,6 +1,7 @@
 # AI Prompts & Engineering Directives Log
 **Project Title**: Real-Time Communication Portal & Pipelines (Sprint 12)  
-**Submission Tag**: FTEWSVE | [PDIT-FTE-11462] | [Client 12 Project]  
+**Submission Tag**: FTEWSVE | PDIT-FTE-11462 | Sprint 12 Submission  
+**Engineer**: Himesh Singh (PDIT-FTE-11462)  
 **Ticket ID**: ENG-149204  
 **Date**: October 2026  
 

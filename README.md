@@ -1,10 +1,11 @@
-# FTEWSVE | [PDIT-FTE-11462] | [Client 12 Project] Submission
+# FTEWSVE | PDIT-FTE-11462 | Sprint 12 Submission
 ## ENG-149204: Real-Time Communication Portal & Pipelines
+**Engineer**: Himesh Singh (PDIT-FTE-11462)  
 **Epic**: Core Infrastructure Overhaul & Real-Time Sync  
 **Priority**: P0 (Critical - Blocking Revenue)  
 **Story Points**: 8  
 **Reporter**: Amit Sharma (Senior Staff Engineer)  
-**Assignee**: Floor Dispatch Infrastructure Team  
+**Assignee**: Floor Dispatch Infrastructure Team (Himesh Singh)  
 **Live Vercel URL**: [https://sprint-12-mu.vercel.app/](https://sprint-12-mu.vercel.app/)  
 **GitHub Repository**: [https://github.com/TimeLineOfficial/sprint-12](https://github.com/TimeLineOfficial/sprint-12)  
 
